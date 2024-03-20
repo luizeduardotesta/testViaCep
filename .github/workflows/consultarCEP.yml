@@ -1,0 +1,33 @@
+name: Consultar CEP
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Step 1 Install Newman
+        run: |
+              npm install -g newman
+              node --version
+
+      - name: Step 2 Checkout install newman-reporter-htmlextra
+        run: sudo npm install -g newman-reporter-htmlextra
+        
+      - name: Run Newman
+        run: newman run viaCep.json -e viaCep_env.json --reporters htmlextra --reporter-htmlextra-export reports/GETviaCep.html
+
+      - name: Archive reports
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-reports
+          path: reports/GETviaCep.html
