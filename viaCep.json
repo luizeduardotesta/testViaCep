@@ -1,0 +1,112 @@
+{
+	"info": {
+		"_postman_id": "ba85fb5f-b1ab-4032-8ff9-ad45e46a9400",
+		"name": "viaCep",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26876722"
+	},
+	"item": [
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Compare CEP\", function () {\r",
+							"    pm.expect(pm.response.json().cep).to.eql(\"01001-000\");\r",
+							"    pm.environment.set(\"CEP\", pm.response.json().cep)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Compare logradouro\", function () {\r",
+							"    pm.expect(pm.response.json().logradouro).to.eql(\"Praça da Sé\");\r",
+							"    pm.environment.set(\"logradouro\", pm.response.json().logradouro)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Compare complemento\", function () {\r",
+							"    pm.expect(pm.response.json().complemento).to.eql(\"lado ímpar\");\r",
+							"    pm.environment.set(\"complemento\", pm.response.json().complemento)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Compare bairro\", function () {\r",
+							"    pm.expect(pm.response.json().bairro).to.eql(\"Sé\");\r",
+							"    pm.environment.set(\"bairro\", pm.response.json().bairro)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Compare localidade\", function () {\r",
+							"    pm.expect(pm.response.json().localidade).to.eql(\"São Paulo\");\r",
+							"    pm.environment.set(\"localidade\", pm.response.json().localidade)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Compare uf\", function () {\r",
+							"    pm.expect(pm.response.json().uf).to.eql(\"SP\");\r",
+							"    pm.environment.set(\"uf\", pm.response.json().uf)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Compare ibge\", function () {\r",
+							"    pm.expect(pm.response.json().ibge).to.eql(\"3550308\");\r",
+							"    pm.environment.set(\"ibge\", pm.response.json().ibge)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Compare gia\", function () {\r",
+							"    pm.expect(pm.response.json().gia).to.eql(\"1004\");\r",
+							"    pm.environment.set(\"gia\", pm.response.json().gia)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Compare ddd\", function () {\r",
+							"    pm.expect(pm.response.json().ddd).to.eql(\"11\");\r",
+							"    pm.environment.set(\"ddd\", pm.response.json().ddd)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Compare siafi\", function () {\r",
+							"    pm.expect(pm.response.json().siafi).to.eql(\"7107\");\r",
+							"    pm.environment.set(\"siafi\", pm.response.json().siafi)\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"function consultarCep(){\r",
+							"    const consultarCep = [\"01001000\"];\r",
+							"\r",
+							"    const randomItem = consultarCep[Math.floor(Math.random() * consultarCep.length)];\r",
+							"\r",
+							"    return randomItem;\r",
+							"}\r",
+							"\r",
+							"pm.environment.set(\"consultarCep\", consultarCep());"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/{{consultarCep}}/json/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{consultarCep}}",
+						"json",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
